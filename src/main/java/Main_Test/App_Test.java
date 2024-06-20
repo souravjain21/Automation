@@ -8,30 +8,31 @@ import io.appium.java_client.android.AndroidDriver;
 
 import java.net.MalformedURLException;
 
-public class App_test {
+public class App_Test {
     public static Functions functionCall;
     public static AndroidDriver driver;
 
 
 
-    public App_test(AndroidDriver driver) {
-        App_test.driver = driver;
+    public App_Test(AndroidDriver driver) {
+        App_Test.driver = driver;
     }
 
 
-    public static void main(String[] args) throws MalformedURLException, InterruptedException {
-        functionCall = new Functions((AndroidDriver) driver);
-        LoginScreen loginScreen = new LoginScreen((AndroidDriver) driver);
+    public static void main(String[] args) throws Exception {
+
 
         functionCall = new Functions((AndroidDriver) driver);
-        Reward_wallet rewardWallet = new Reward_wallet((AndroidDriver) driver);
+        LoginScreen loginScreen = new LoginScreen((AndroidDriver) driver);
+        Reward_wallet rew = new Reward_wallet((AndroidDriver) driver);
+
 
         // Capabilities
         Functions.Capabilities();
-        Functions.simpleWait(Constants.wait_2);
+        Functions.simpleWait(Constants.WAIT_2);
 
         // Notification Popup
-        loginScreen.Allow_Notification_popup();
+        loginScreen.allow_notification_popup();
 
         // Login
         loginScreen.login();
@@ -40,6 +41,15 @@ public class App_test {
 
 
         //Reward Screen
+        rew.Rewards();
+
+        Functions.driver.quit();
+
+
+
+
+
+
 
 
 
