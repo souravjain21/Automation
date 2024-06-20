@@ -3,14 +3,23 @@ package Locators;
 import Utility.Constants;
 import Utility.Functions;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.NoSuchElementException;
 
 import static Utility.Functions.print;
 
+
+
+
 public class Reward_wallet {
     public static AppiumDriver driver;
+
 
     public Reward_wallet(AndroidDriver driver) {
         Reward_wallet.driver = driver;
@@ -63,7 +72,11 @@ public class Reward_wallet {
     By referNearnScreen = By.xpath("//android.widget.TextView[@text='REFER & EARN']");
     By cashWalletScreen = By.xpath("//android.widget.TextView[@text='My Wallet']");
 
-
+    By tNc = By.xpath("//android.widget.TextView[@text='Terms & Conditions:']");
+    By clickHereText = By.xpath("//android.widget.TextView[@text='Click Here']");
+    By videoPopup = By.xpath("//android.webkit.WebView");
+    By videocloseIcon = By.xpath("//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]");
+    By videoPlayButton = By.xpath("//android.widget.Button[@text='Play']");
 
 
 
@@ -231,16 +244,56 @@ public class Reward_wallet {
         }
 
         //Scrolled Down
-        Functions.scrollToText("Terms & Conditions");
+        Functions.scrollToText("Terms & Conditions:");
+
+        try {
+            if (Functions.driver.findElement(tNc).isDisplayed()) {
+                String TNC = Functions.driver.findElement(tNc).getText();
+                print("Heading Visible : " + TNC);
+            } else {
+                print("-------- Terms and Conditions element is not displayed. --------");
+            }
+        } catch (Exception e) {
+            print("Element not found: " + e.getMessage());
+        }
+
+        try {
+            boolean clickHere = Functions.driver.findElement(clickHereText).isDisplayed();
+            print("Youtube link click here is visible :- " + clickHere);
+        } catch (Exception e) {
+            print("-------- Click Here Text element is not found. --------");
+        }
+
+        Functions.simpleWait(Constants.WAIT_1);
+        Functions.driver.findElement(clickHereText).click();
 
 
 
+        WebDriverWait wait = new WebDriverWait(Functions.driver, Constants.WAIT_2);
+        try {
+            WebElement clickherepopup = wait.until(ExpectedConditions.visibilityOfElementLocated(videoPopup));
+            if (clickherepopup.isDisplayed()) {
+                print("-------- YouTube popup is present. --------");
+            } else {
+                print("YouTube popup is not displayed.");
+            }
 
 
+            // Example: Checking if the video is playing by verifying the `playing` attribute
+            WebElement isPlaying = wait.until(ExpectedConditions.visibilityOfElementLocated(videoPlayButton));
+            Functions.simpleWait(Constants.WAIT_2);
+            if (isPlaying.isDisplayed()) {
+                print("-------- Video is playing. --------");
+            } else {
+                print("-------- Video is not playing. --------");
+            }
+        } catch (Exception e) {
+            print("YouTube popup element not found: " + e.getMessage());
+        }
 
 
-
-        Functions.driver.navigate().back();
+        Functions.driver.findElement(videocloseIcon).click();
+        print("-------- Video Popup Closed --------");
 
 
     }

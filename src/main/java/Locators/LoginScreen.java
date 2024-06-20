@@ -45,7 +45,7 @@ public class LoginScreen {
     //Login Code Starts
     public void login() {
 
-        Functions.simpleWait(Constants.WAIT_2);
+        Functions.simpleWait(Constants.WAIT_1);
         String Heading = Functions.driver.findElement(loginSignup).getText();
         print("Element Present on App :" + Heading);
 

@@ -42,6 +42,7 @@ public class App_Test {
 
         //Reward Screen
         rew.Rewards();
+        Functions.simpleWait(Constants.WAIT_2);
 
         Functions.driver.quit();
 

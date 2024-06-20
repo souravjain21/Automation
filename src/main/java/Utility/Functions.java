@@ -55,12 +55,12 @@ public class Functions {
 
     public static void scrollToText(String searchText) {
         try {
-            driver.findElement(MobileBy.AndroidUIAutomator(
+            Functions.driver.findElement(MobileBy.AndroidUIAutomator(
                     "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text(\"" + searchText + "\"))"));
         } catch (Exception e) {
-            List<WebElement> elements = driver.findElements(MobileBy.AndroidUIAutomator("new UiSelector().text(\"" + searchText + "\")"));
+            List<WebElement> elements = Functions.driver.findElements(MobileBy.AndroidUIAutomator("new UiSelector().text(\"" + searchText + "\")"));
             if (elements.size() == 0) {
-                System.out.println("Element with text '" + searchText + "' not found.");
+                print("Element with text '" + searchText + "' not found.");
             }
         }
 
